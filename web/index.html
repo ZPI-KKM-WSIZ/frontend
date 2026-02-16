@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Air Quality Cloud</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main id="app">
+      <section id="map"></section>
+
+      <section class="overlay topbar">
+        <div>
+          <h1>Air Quality Cloud</h1>
+          <p>Podgląd jakości powietrza na mapie</p>
+        </div>
+        <p id="status">Ładowanie danych...</p>
+      </section>
+
+      <section class="overlay sidebar">
+        <label for="search">Szukaj stacji</label>
+        <input id="search" type="search" placeholder="np. Kraków, Biuro, Dom" />
+        <ul id="stations"></ul>
+      </section>
+
+      <section class="overlay legend">
+        <h2>PM2.5 µg/m³</h2>
+        <ul>
+          <li><span style="background:#14b86f"></span>0-12 Bardzo dobra</li>
+          <li><span style="background:#84cc16"></span>12.1-25 Dobra</li>
+          <li><span style="background:#eab308"></span>25.1-35 Umiarkowana</li>
+          <li><span style="background:#f97316"></span>35.1-55 Zła</li>
+          <li><span style="background:#ef4444"></span>>55 Bardzo zła</li>
+        </ul>
+      </section>
+
+      <section class="overlay details" id="details">
+        <h2 id="details-name">Wybierz stację</h2>
+        <div class="grid">
+          <p><span>PM1</span><strong id="d-pm1">-</strong></p>
+          <p><span>PM2.5</span><strong id="d-pm25">-</strong></p>
+          <p><span>PM10</span><strong id="d-pm10">-</strong></p>
+          <p><span>Temp.</span><strong id="d-temp">-</strong></p>
+          <p><span>Wilgotność</span><strong id="d-hum">-</strong></p>
+          <p><span>Ciśnienie</span><strong id="d-pres">-</strong></p>
+        </div>
+        <p id="details-time">Brak danych</p>
+      </section>
+    </main>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
