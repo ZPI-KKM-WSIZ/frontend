@@ -16,43 +16,62 @@
     <main id="app">
       <section id="map"></section>
 
-      <section class="overlay topbar">
-        <div>
-          <h1>Air Quality Cloud</h1>
-          <p>Podgląd jakości powietrza na mapie</p>
-        </div>
-        <p id="status">Ładowanie danych...</p>
-      </section>
+      <button id="menu-toggle" class="overlay" type="button" aria-label="Pokaż lub ukryj panele">☰ Menu</button>
 
-      <section class="overlay sidebar">
-        <label for="search">Szukaj stacji</label>
-        <input id="search" type="search" placeholder="np. Kraków, Biuro, Dom" />
-        <ul id="stations"></ul>
-      </section>
+      <div id="panels-scroll">
+        <section class="overlay topbar">
+          <div class="topbar-actions">
+            <p id="status">Ładowanie danych...</p>
+            <button id="theme-toggle" type="button" aria-label="Przełącz motyw">Tryb: Dark</button>
+          </div>
+        </section>
 
-      <section class="overlay legend">
-        <h2>PM2.5 µg/m³</h2>
-        <ul>
-          <li><span style="background:#14b86f"></span>0-12 Bardzo dobra</li>
-          <li><span style="background:#84cc16"></span>12.1-25 Dobra</li>
-          <li><span style="background:#eab308"></span>25.1-35 Umiarkowana</li>
-          <li><span style="background:#f97316"></span>35.1-55 Zła</li>
-          <li><span style="background:#ef4444"></span>>55 Bardzo zła</li>
-        </ul>
-      </section>
+        <section class="overlay sidebar">
+          <div class="topbar-brand">
+            <h1>Air Quality Cloud</h1>
+          </div>
+          <label for="search">Szukaj stacji</label>
+          <input id="search" type="search" placeholder="np. Kraków, Biuro, Dom" />
+          <label for="location-search">Szukaj lokalizacji</label>
+          <div class="location-search-wrap">
+            <input id="location-search" type="search" autocomplete="off" placeholder="np. Warszawa, Rynek Główny" />
+            <button id="location-search-btn" type="button">Szukaj</button>
+          </div>
+          <ul id="location-suggestions-list" class="suggestions-list"></ul>
+          <button id="locate-me-btn" type="button" class="locate-btn">📍 Moja lokalizacja</button>
+          <p id="location-search-status">Wpisz lokalizację i kliknij Szukaj.</p>
+          <ul id="stations"></ul>
+        </section>
 
-      <section class="overlay details" id="details">
-        <h2 id="details-name">Wybierz stację</h2>
-        <div class="grid">
-          <p><span>PM1</span><strong id="d-pm1">-</strong></p>
-          <p><span>PM2.5</span><strong id="d-pm25">-</strong></p>
-          <p><span>PM10</span><strong id="d-pm10">-</strong></p>
-          <p><span>Temp.</span><strong id="d-temp">-</strong></p>
-          <p><span>Wilgotność</span><strong id="d-hum">-</strong></p>
-          <p><span>Ciśnienie</span><strong id="d-pres">-</strong></p>
-        </div>
-        <p id="details-time">Brak danych</p>
-      </section>
+        <aside id="right-panels">
+          <section class="overlay legend">
+            <h2>PM2.5 µg/m³</h2>
+            <ul>
+              <li><span style="background:#14b86f"></span>0-12 Bardzo dobra</li>
+              <li><span style="background:#84cc16"></span>12.1-25 Dobra</li>
+              <li><span style="background:#eab308"></span>25.1-35 Umiarkowana</li>
+              <li><span style="background:#f97316"></span>35.1-55 Zła</li>
+              <li><span style="background:#ef4444"></span>>55 Bardzo zła</li>
+            </ul>
+          </section>
+
+          <section class="overlay details" id="details">
+            <div class="details-head">
+              <h2 id="details-name">Wybierz stację</h2>
+              <button id="details-back" type="button">← Wyszukiwanie</button>
+            </div>
+            <div class="grid">
+              <p><span>PM1</span><strong id="d-pm1">-</strong></p>
+              <p><span>PM2.5</span><strong id="d-pm25">-</strong></p>
+              <p><span>PM10</span><strong id="d-pm10">-</strong></p>
+              <p><span>Temp.</span><strong id="d-temp">-</strong></p>
+              <p><span>Wilgotność</span><strong id="d-hum">-</strong></p>
+              <p><span>Ciśnienie</span><strong id="d-pres">-</strong></p>
+            </div>
+            <p id="details-time">Brak danych</p>
+          </section>
+        </aside>
+      </div>
     </main>
 
     <script
