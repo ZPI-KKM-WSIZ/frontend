@@ -1,0 +1,74 @@
+{
+  "nextDeviceId": 2,
+  "devices": [
+    {
+      "id": 1,
+      "token": "1603bbb14609a642ba30c87ec1b0b547b1d6e697671f1347",
+      "friendlyName": "AQM Test",
+      "createdAt": "2026-02-16T02:49:59.695Z",
+      "lastSeenAt": "2026-02-16T02:49:59.693Z",
+      "latest": {
+        "timestamp": "2026-02-16T02:49:59.693Z",
+        "uptime": 123,
+        "availability": {
+          "co2": false,
+          "tvoc": false,
+          "pm1": true,
+          "pm10": true,
+          "pm25": true,
+          "pressure": true,
+          "humidity": true,
+          "temperature": true
+        },
+        "sensors": {
+          "pm1": 7.1,
+          "pm25": 11.3,
+          "pm10": 14.8,
+          "temperature": 23.42,
+          "humidity": 41.87,
+          "pressure": 1008.52,
+          "co2": null,
+          "tvoc": null
+        },
+        "meta": {
+          "indoor": true,
+          "lat": 50.06143,
+          "lon": 19.93658
+        },
+        "sourceIp": "::1"
+      },
+      "history": [
+        {
+          "timestamp": "2026-02-16T02:49:59.693Z",
+          "uptime": 123,
+          "availability": {
+            "co2": false,
+            "tvoc": false,
+            "pm1": true,
+            "pm10": true,
+            "pm25": true,
+            "pressure": true,
+            "humidity": true,
+            "temperature": true
+          },
+          "sensors": {
+            "pm1": 7.1,
+            "pm25": 11.3,
+            "pm10": 14.8,
+            "temperature": 23.42,
+            "humidity": 41.87,
+            "pressure": 1008.52,
+            "co2": null,
+            "tvoc": null
+          },
+          "meta": {
+            "indoor": true,
+            "lat": 50.06143,
+            "lon": 19.93658
+          },
+          "sourceIp": "::1"
+        }
+      ]
+    }
+  ]
+}
