@@ -136,24 +136,15 @@ app.post('/api/v1/device/upload', async (req, res) => {
 app.get('/api/v1/public/stations', async (_req, res) => {
   if (useRemoteBackend) {
     try {
-      const sensorId = String(_req.query.sensor_id || process.env.REMOTE_SENSOR_ID || '').trim();
-      if (!sensorId) {
-        return res.status(400).json({
-          error: 'missing_sensor_id',
-          message: 'Provide sensor_id query or set REMOTE_SENSOR_ID environment variable'
-        });
-      }
-
-      const response = await fetch(`${remoteBackendBase}/api/v1/readings?sensor_id=${encodeURIComponent(sensorId)}`);
+      // Proxy directly to the FastAPI /api/v1/public/stations endpoint which
+      // aggregates all sensors with their latest readings from Cassandra.
+      const response = await fetch(`${remoteBackendBase}/api/v1/public/stations`);
       if (!response.ok) {
-        return res.status(response.status).json({ error: 'remote_readings_failed' });
+        return res.status(response.status).json({ error: 'remote_stations_failed' });
       }
 
-      const payload = await response.json().catch(() => []);
-      const readings = normalizeReadingsPayload(payload);
-      const stations = readings.map(toStationModel);
-
-      return res.json({ stations });
+      const payload = await response.json().catch(() => ({ stations: [] }));
+      return res.json(payload);
     } catch (error) {
       return res.status(502).json({
         error: 'remote_backend_unavailable',

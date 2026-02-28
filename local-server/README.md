@@ -65,20 +65,19 @@ Po pierwszym udanym uploadzie firmware zapisuje token z odpowiedzi i używa go d
 - `PORT` (domyślnie `8080`)
 - `DATA_FILE` (domyślnie `cloud/local-server/data/db.json`)
 - `MAX_HISTORY` (domyślnie `500` rekordów na stację)
-- `REMOTE_BACKEND_BASE` (np. `http://api.3492357.xyz`)
-- `REMOTE_SENSOR_ID` (UUID sensora wymagany przez `/api/v1/readings`)
+- `REMOTE_BACKEND_BASE` (np. `http://api.3492357.xyz`) — gdy ustawione, lokalny serwer proxuje do właściwego backendu
 
 ## Tryb backendu produkcyjnego
 
-Jeśli chcesz, aby lokalny frontend korzystał z faktycznego backendu:
+Jeśli chcesz, aby lokalny serwer frontendu pobierał dane z właściwego backendu (FastAPI + Cassandra):
 
 ```bash
 cd cloud/local-server
-REMOTE_BACKEND_BASE=http://api.3492357.xyz REMOTE_SENSOR_ID=<uuid_sensora> npm start
+REMOTE_BACKEND_BASE=http://api.3492357.xyz npm start
 ```
 
-W tym trybie adapter mapuje:
+W tym trybie:
 
-- `POST /api/v1/device/upload` -> `POST /api/v1/sensors/register`
-- `GET /api/v1/public/stations` -> `GET /api/v1/readings`
+- `GET /api/v1/public/stations` → proxy do `GET <REMOTE_BACKEND_BASE>/api/v1/public/stations`
+- `POST /api/v1/device/upload` → proxy do `POST <REMOTE_BACKEND_BASE>/api/v1/sensors/register`
 
