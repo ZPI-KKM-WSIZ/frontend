@@ -1,17 +1,17 @@
-# Air Quality Local Server (backend + frontend mapy)
+# Air Quality Local Server (backend + map frontend)
 
-To jest **lokalny stack developerski** oddzielony od właściwych repozytoriów backendowych w `cloud/_archive/`.
-Projekt jest osobny od firmware Arduino (`src/`, `include/`, `lib/`, `test/`).
+This is a **local development stack** separated from the target backend repositories in `cloud/_archive/`.
+It is separate from Arduino firmware (`src/`, `include/`, `lib/`, `test/`).
 
-## Co zawiera
+## What it contains
 
-- `web/` — frontend mapy,
-- `server/` — backend Express (API uploadu i endpointy publiczne),
-- `data/db.json` — lokalna baza danych tworzona automatycznie przy uruchomieniu.
+- `web/` — map frontend,
+- `server/` — Express backend (upload API and public endpoints),
+- `data/db.json` — local database file created automatically at startup.
 
-## Szybki start
+## Quick start
 
-Wymagania: Node.js 18+.
+Requirements: Node.js 18+.
 
 ```bash
 cd cloud/local-server
@@ -19,24 +19,24 @@ npm install
 npm start
 ```
 
-Aplikacja ruszy na `http://localhost:8080`.
+Application starts at `http://localhost:8080`.
 
-## Jak przetestować frontend
+## How to test the frontend
 
-1. uruchom `npm start`,
-2. otwórz `http://localhost:8080`,
-3. sprawdź mapę, legendę PM2.5, listę stacji i panel szczegółów,
-4. opcjonalnie zasymuluj upload przykładowym JSON-em na endpoint urządzenia.
+1. run `npm start`,
+2. open `http://localhost:8080`,
+3. verify map, PM2.5 legend, station list, and details panel,
+4. optionally simulate upload with sample JSON to the device endpoint.
 
-## Endpointy
+## Endpoints
 
-### Upload z urządzenia
+### Device upload
 
 `POST /api/v1/device/upload`
 
-Body zgodne z dokumentem projektu (token/availability/meta/sensors).
+Body should follow project payload format (token/availability/meta/sensors).
 
-Przykładowa odpowiedź przy onboardingu:
+Example onboarding response:
 
 ```json
 {
@@ -44,40 +44,40 @@ Przykładowa odpowiedź przy onboardingu:
 }
 ```
 
-Przy kolejnych uploadach backend może zwracać pusty obiekt `{}`.
+For later uploads, backend may return an empty object `{}`.
 
-### Publiczne dane dla frontendu
+### Public frontend data
 
 - `GET /api/v1/public/stations`
 - `GET /api/v1/public/stations/:id/history?limit=100`
 
-## Integracja firmware
+## Firmware integration
 
-W firmware ustaw:
+In firmware set:
 
-- `Config.serverUrl` -> `http://<twoj-serwer>:8080/api/v1/device/upload`
-- `Config.uploadToken` -> puste na starcie (backend zwróci token)
+- `Config.serverUrl` -> `http://<your-server>:8080/api/v1/device/upload`
+- `Config.uploadToken` -> empty at start (backend returns token)
 
-Po pierwszym udanym uploadzie firmware zapisuje token z odpowiedzi i używa go dalej.
+After first successful upload, firmware stores the token from the response and reuses it.
 
-## Konfiguracja opcjonalna
+## Optional configuration
 
-- `PORT` (domyślnie `8080`)
-- `DATA_FILE` (domyślnie `cloud/local-server/data/db.json`)
-- `MAX_HISTORY` (domyślnie `500` rekordów na stację)
-- `REMOTE_BACKEND_BASE` (np. `http://api.3492357.xyz`) — gdy ustawione, lokalny serwer proxuje do właściwego backendu
+- `PORT` (default: `8080`)
+- `DATA_FILE` (default: `cloud/local-server/data/db.json`)
+- `MAX_HISTORY` (default: `500` records per station)
+- `REMOTE_BACKEND_BASE` (e.g. `http://api.3492357.xyz`) — when set, local server proxies to the target backend
 
-## Tryb backendu produkcyjnego
+## Target backend mode
 
-Jeśli chcesz, aby lokalny serwer frontendu pobierał dane z właściwego backendu (FastAPI + Cassandra):
+If you want local frontend server to read data from the target backend (FastAPI + Cassandra):
 
 ```bash
 cd cloud/local-server
 REMOTE_BACKEND_BASE=http://api.3492357.xyz npm start
 ```
 
-W tym trybie:
+In this mode:
 
-- `GET /api/v1/public/stations` → proxy do `GET <REMOTE_BACKEND_BASE>/api/v1/public/stations`
-- `POST /api/v1/device/upload` → proxy do `POST <REMOTE_BACKEND_BASE>/api/v1/sensors/register`
+- `GET /api/v1/public/stations` → proxy to `GET <REMOTE_BACKEND_BASE>/api/v1/public/stations`
+- `POST /api/v1/device/upload` → proxy to `POST <REMOTE_BACKEND_BASE>/api/v1/sensors/register`
 

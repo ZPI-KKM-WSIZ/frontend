@@ -1,14 +1,14 @@
 # Cloud workspace split
 
-Ten katalog został rozdzielony na dwie wyraźne części:
+This directory is divided into two clear parts:
 
-- `_archive/` — docelowe repozytoria zdalne:
+- `_archive/` — target remote repositories:
   - `backend` (`https://github.com/ZPI-KKM-WSIZ/backend.git`)
   - `database` (`https://github.com/ZPI-KKM-WSIZ/database.git`)
   - `contracts` (`https://github.com/ZPI-KKM-WSIZ/contracts.git`)
-- `local-server/` — lokalny serwer developerski (Express + frontend + lokalny plik `db.json`).
+- `local-server/` — local developer server (Express + frontend + local `db.json` file).
 
-## Lokalny start
+## Local start
 
 ```bash
 cd cloud/local-server
@@ -16,8 +16,8 @@ npm install
 npm start
 ```
 
-## Dlaczego tak
+## Why this setup
 
-- lokalny stack jest odseparowany od repozytoriów docelowych,
-- łatwiej uniknąć pomyłek (np. edycji lokalnego mocka zamiast właściwego backendu),
-- przepływ pracy jest czytelny: firmware i testy lokalne -> `local-server`, backend docelowy -> `_archive/backend`.
+- local stack is separated from target repositories,
+- easier to avoid mistakes (e.g., editing a local mock instead of the real backend),
+- workflow is clearer: firmware and local tests -> `local-server`, target backend -> `_archive/backend`.
