@@ -1,0 +1,29 @@
+services:
+  app:
+    build: .
+    container_name: aq-frontend
+    restart: unless-stopped
+    networks:
+      - aq-net
+    environment:
+      PORT: "3000"
+      BACKEND_URL: ${BACKEND_URL:-https://api.3492357.xyz}
+      SENSORS_PAGE_SIZE: ${SENSORS_PAGE_SIZE:-1000}
+    expose:
+      - "3000"
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: aq-cloudflared
+    restart: unless-stopped
+    depends_on:
+      - app
+    networks:
+      - aq-net
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
+
+networks:
+  aq-net:
+    driver: bridge
